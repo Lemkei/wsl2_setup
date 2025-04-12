@@ -77,3 +77,23 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+# Create a bash function for your .bashrc that checks differences
+function sync-config() {
+  echo "Checking for differences between configurations..."
+  
+  # Print differences between home and repo
+  diff -r ~/.config/nvim ~/wsl2_setup/.config/nvim || true
+  diff ~/.bashrc ~/wsl2_setup/.bashrc || true
+  
+  # Ask to sync if needed
+  read -p "Copy home files to repo? (y/n) " choice
+  if [[ $choice == "y" ]]; then
+    cp ~/.config/nvim/init.lua ~/wsl2_setup/.config/nvim/
+    cp -r ~/.config/nvim/ftplugin/ ~/wsl2_setup/.config/nvim/
+    cp -r ~/.config/nvim/templates/ ~/wsl2_setup/.config/nvim/
+    cp ~/.bashrc ~/wsl2_setup/
+    echo "Files copied to repo"
+  fi
+}
+
