@@ -1,0 +1,38 @@
+\documentclass[12pt]{article}
+
+% Basic packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{setspace}    % For line spacing
+\usepackage{titlesec}    % For section formatting
+\usepackage{fancyhdr}    % For footers
+
+% Document formatting
+\onehalfspacing          % 1.5 line spacing
+\setlength{\parindent}{0.5in}
+\setlength{\parskip}{0.5em}
+% Justified text (default in LaTeX)
+\raggedbottom
+
+% Bold numbered section headings
+\titleformat{\section}
+{\normalfont\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
+
+% Footer with name and page number
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{Page \thepage}
+\lfoot{Your Name}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{Another Silly Adventure}
+\author{Petr Rusnok}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\end{document}
