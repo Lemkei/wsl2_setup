@@ -7,6 +7,9 @@ vim.opt.number = true           -- Show line numbers on the left side
 vim.opt.relativenumber = true   -- Show relative line numbers (easier for vertical movements)
 vim.opt.termguicolors = true    -- Enable 24-bit RGB colors for better theme support
 
+-- COLORSHEME SETTINGS
+vim.opt.background = 'dark'
+
 -- TEXT EDITING BEHAVIOR
 vim.opt.tabstop = 4             -- Width of a tab character displayed as 4 spaces
 vim.opt.shiftwidth = 4          -- Number of spaces for each indentation level
@@ -56,7 +59,12 @@ require('packer').startup(function(use)
   
   -- LSP configuration (optional, but high value for code completion and navigation)
   use 'neovim/nvim-lspconfig'
+
+  -- Solarized colorscheme
+  use 'lifepillar/vim-solarized8' -- Modern Solarized for Neovim
 end)
+
+vim.cmd('colorscheme solarized8')
 
 -- =============================================================================
 -- TEMPLATE SYSTEM
