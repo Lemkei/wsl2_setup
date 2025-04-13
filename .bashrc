@@ -1,5 +1,4 @@
 # Minimal .bashrc configuration with username
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -23,10 +22,8 @@ alias l='ls -CF'
 
 # Enable spelling correction for cd
 shopt -s cdspell
-
 # Prompt with username and current directory
 PS1='\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-
 # Load bash completions if they exist
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -61,6 +58,10 @@ rmtex() {
         fi
     done
 }
+
+
+export PATH="$HOME/neovim/build/bin:$PATH"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

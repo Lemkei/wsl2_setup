@@ -29,7 +29,6 @@ vim.keymap.set('n', '<leader>lK', '<plug>(vimtex-stop-all)', { buffer = true }) 
 
 -- LATEX ABBREVIATIONS
 vim.cmd([[
-
   iabbrev <buffer> eq \begin{equation}<CR><CR>\end{equation}<Up>
   iabbrev <buffer> align \begin{align}<CR><CR>\end{align}<Up>
   
@@ -70,7 +69,6 @@ vim.cmd([[
   iabbrev <buffer> ds \frac{d<Space>}{d<Space>}<Left><Left><Left><Left><Left><Left>
   iabbrev <buffer> pd \frac{\partial<Space>}{\partial<Space>}<Left><Left><Left><Left><Left><Left><Left><Left><Left>
   iabbrev <buffer> mbf \mathbf{}<Left>
-
 ]])
 
 -- CONFIRMATION MESSAGE

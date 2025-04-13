@@ -1,7 +1,11 @@
+-- =============================================================================
+-- MINIMALIST NEOVIM CONFIGURATION
+-- =============================================================================
+
 -- EDITOR APPEARANCE
-vim.opt.number 		= true    -- Show line numbers on the left side
-vim.opt.relativenumber 	= true    -- Show relative line numbers (easier for vertical movements)
-vim.opt.termguicolors 	= true    -- Enable 24-bit RGB colors for better theme support
+vim.opt.number = true           -- Show line numbers on the left side
+vim.opt.relativenumber = true   -- Show relative line numbers (easier for vertical movements)
+vim.opt.termguicolors = true    -- Enable 24-bit RGB colors for better theme support
 
 -- TEXT EDITING BEHAVIOR
 vim.opt.tabstop = 4             -- Width of a tab character displayed as 4 spaces
@@ -29,7 +33,13 @@ vim.keymap.set('n', '<leader>e', ':Explore<CR>') -- Open file explorer with <spa
 -- STATUS LINE CONFIGURATION
 vim.opt.statusline = '%f %y %m %r %=%l,%c %P' -- Format: filename, filetype, modified flag, cursor position
 
+-- =============================================================================
 -- PLUGIN MANAGEMENT - PACKER AUTO-INSTALLATION
+-- =============================================================================
+-- Cost-benefit: Packer provides automatic installation and management of plugins
+-- with minimal overhead. It self-bootstraps, requiring no manual installation
+-- =============================================================================
+
 local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   -- Clone packer if not installed
@@ -40,21 +50,34 @@ end
 -- PLUGIN DEFINITIONS
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'  -- Plugin manager manages itself
+  
+  -- LaTeX plugin (only loaded for .tex files, so minimal overhead)
   use {'lervag/vimtex', tag = 'v2.15'} -- LaTeX plugin with version pinning
+  
+  -- LSP configuration (optional, but high value for code completion and navigation)
   use 'neovim/nvim-lspconfig'
-  use 'davidhalter/jedi-vim'  
 end)
 
--- TEMPLATE SYSTEM IN INIT.LUA
+-- =============================================================================
+-- TEMPLATE SYSTEM
+-- =============================================================================
+-- Cost-benefit: Provides time-saving templates with zero runtime overhead
+-- =============================================================================
+
 vim.cmd([[
   " Create template autocmd at global level
   augroup latex_template_global
     autocmd!
-    autocmd BufNewFile *.tex 0read /home/lemkei/.config/nvim/templates/latex.template | normal! G
+    autocmd BufNewFile *.tex 0read ~/.config/nvim/templates/latex.template | normal! G
   augroup END
 ]])
 
--- SET CLIPBOARD PROVIDER
+-- =============================================================================
+-- WSL-SPECIFIC CLIPBOARD CONFIGURATION
+-- =============================================================================
+-- This enables copying between WSL and Windows
+-- =============================================================================
+
 vim.g.clipboard = {
   name = 'win32yank',
   copy = {
@@ -68,7 +91,11 @@ vim.g.clipboard = {
   cache_enabled = 0,
 }
 
--- R
+-- =============================================================================
+-- LSP CONFIGURATION (if installed)
+-- =============================================================================
+
 if pcall(require, 'lspconfig') then
+  -- R language server
   require('lspconfig').r_language_server.setup{}
 end
