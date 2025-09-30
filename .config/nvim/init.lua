@@ -6,6 +6,7 @@
 vim.opt.number = true           -- Show line numbers on the left side
 vim.opt.relativenumber = true   -- Show relative line numbers (easier for vertical movements)
 vim.opt.termguicolors = true    -- Enable 24-bit RGB colors for better theme support
+vim.opt.conceallevel = 2
 
 -- COLORSHEME SETTINGS
 vim.opt.background = 'dark'
@@ -62,7 +63,31 @@ require('packer').startup(function(use)
 
   -- Solarized colorscheme
   use 'lifepillar/vim-solarized8' -- Modern Solarized for Neovim
+  
+  -- Obsidian integration
+  use {
+    'epwalsh/obsidian.nvim',
+    tag = '*',  -- Use the latest release
+    requires = {
+      'nvim-lua/plenary.nvim',  -- Required dependency
+    },
+  }
 end)
+
+-- OBSIDIAN CONFIGURATION
+require('obsidian').setup({
+  workspaces = {
+    {
+      name = "personal",
+      path = "/mnt/c/Users/Lemke/Documents/CERGE-EI",  
+    },
+  },
+  -- Optional: daily notes configuration
+  daily_notes = {
+    folder = "daily",
+    date_format = "%Y-%m-%d",
+  },
+})
 
 vim.cmd('colorscheme solarized8')
 
@@ -100,10 +125,14 @@ vim.g.clipboard = {
 }
 
 -- =============================================================================
--- LSP CONFIGURATION (if installed)
+-- LSP CONFIGURATION 
 -- =============================================================================
-
-if pcall(require, 'lspconfig') then
-  -- R language server
-  require('lspconfig').r_language_server.setup{}
+if vim.fn.has('nvim-0.11') == 1 then
+  -- R language server using new API
+  vim.lsp.config('r_language_server', {
+    cmd = { 'R', '--slave', '-e', 'languageserver::run()' },
+    filetypes = { 'r', 'rmd' },
+    root_dir = vim.fs.root(0, {'.git', '.Rproj'}),
+  })
+  vim.lsp.enable('r_language_server')
 end

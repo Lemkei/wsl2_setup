@@ -7,11 +7,24 @@ vim.opt_local.spelllang = "en_us" -- Set spell check language to US English
 vim.g.tex_flavor = 'latex'      -- Default to LaTeX when editing .tex files
 vim.g.vimtex_version_check = 0  -- Disable version check to prevent warnings
 
-vim.g.vimtex_view_general_viewer = 'wslview' -- PDF viewer command (WSL specific)
-vim.g.vimtex_view_method = 'general'   -- Use general viewer method
+-- SumatraPDF configuration (much better than wslview for LaTeX)
+vim.g.vimtex_view_method = 'general'
+vim.g.vimtex_view_general_viewer = '/mnt/c/Users/Lemke/AppData/Local/SumatraPDF/SumatraPDF.exe'
+vim.g.vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
+
 vim.g.vimtex_quickfix_mode = 0         -- Disable quickfix window auto-opening
 vim.g.vimtex_compiler_method = 'latexmk' -- Use latexmk for compilation
 
+-- Enable synctex for forward/backward search
+vim.g.vimtex_compiler_latexmk = {
+  options = {
+    '-pdf',
+    '-verbose',
+    '-file-line-error',
+    '-synctex=1',
+    '-interaction=nonstopmode',
+  }
+}
 -- LaTeX KEYBOARD SHORTCUTS - SYMBOL PAIRS
 vim.keymap.set('i', '$$', '$$<Left>', { buffer = true }) -- Insert math mode and place cursor inside
 vim.keymap.set('i', '()', '()<Left>', { buffer = true }) -- Insert parentheses and place cursor inside
