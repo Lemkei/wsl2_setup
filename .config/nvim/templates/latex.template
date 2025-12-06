@@ -6,26 +6,37 @@
 \usepackage{setspace}    % For line spacing
 \usepackage{titlesec}    % For section formatting
 \usepackage{fancyhdr}    % For footers
+\documentclass[12pt]{article}
+
+% Basic packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+% Bibliography setup (APA style)
+\usepackage[style=apa,backend=biber]{biblatex}
+\addbibresource{/home/lemkei/references.bib}
 
 % Document formatting
-\onehalfspacing          % 1.5 line spacing
+\onehalfspacing
 \setlength{\parindent}{0.5in}
 \setlength{\parskip}{0.5em}
-% Justified text (default in LaTeX)
 \raggedbottom
 
 % Bold numbered section headings
 \titleformat{\section}
 {\normalfont\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
 
-% Footer with name and page number
+% Footer
 \pagestyle{fancy}
 \fancyhf{}
 \rfoot{Page \thepage}
-\lfoot{Your Name}
+\lfoot{Petr Rusnok}
 \renewcommand{\footrulewidth}{0.4pt}
 
-\title{Another Silly Adventure}
+\title{Your Title}
 \author{Petr Rusnok}
 \date{\today}
 
@@ -35,4 +46,32 @@
 
 \section{Introduction}
 
+This is a citation \parencite{deChaisemartin2020}.
+
+\printbibliography
+
 \end{document}
+```
+
+## Step 3: Usage in Neovim
+
+Now when writing a LaTeX document:
+
+### Method 1: Telescope (Fuzzy Search)
+```
+1. In INSERT mode, type where you want citation
+2. Press <Ctrl-c>
+3. Fuzzy search appears - type "chaise" or "2020"
+4. Press <Enter>
+5. It inserts \cite{deChaisemartin2020}
+```
+
+### Method 2: Manual
+
+Just type: `\parencite{deChaisemartin2020}`
+
+### Method 3: Normal mode search
+```
+1. In NORMAL mode, press <leader>lc
+2. Search and preview citations
+3. Copy the key manually

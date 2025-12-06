@@ -98,3 +98,18 @@ function sync-config() {
   fi
 }
 
+
+# Papis + BibTeX workflow
+alias pa='papis add --from doi'
+alias pl='papis list'  
+alias pb='papis export --all --format bibtex > ~/references.bib && echo "✓ Updated references.bib"'
+
+# LaTeX compile with bib
+compile-latex() {
+    pdflatex "$1"
+    biber "${1%.tex}"
+    pdflatex "$1"
+    pdflatex "$1"
+}
+
+export EDITOR=nvim

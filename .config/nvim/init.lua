@@ -63,6 +63,13 @@ require('packer').startup(function(use)
 
   -- Solarized colorscheme
   use 'lifepillar/vim-solarized8' -- Modern Solarized for Neovim
+
+  -- Inside packer.startup:
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = { 'nvim-lua/plenary.nvim' }
+    }
+    use 'nvim-telescope/telescope-bibtex.nvim'
   
   -- Obsidian integration
   use {
@@ -73,6 +80,26 @@ require('packer').startup(function(use)
     },
   }
 end)
+
+-- Telescope BibTeX setup (replace the old setup)
+require('telescope').setup{
+  extensions = {
+    bibtex = {
+      -- Path to your bib file
+      global_files = {'/home/lemkei/references.bib'},
+      -- Format of inserted citation
+      format = 'cite',  -- or 'parencite', 'textcite'
+      -- Use context-aware format
+      context = true,
+      context_fallback = true,
+    }
+  }
+}
+require('telescope').load_extension('bibtex')
+
+-- Keybindings (same as before)
+vim.keymap.set('n', '<leader>lc', ':Telescope bibtex<CR>', { desc = 'Search citations' })
+vim.keymap.set('i', '<C-c>', '<Cmd>Telescope bibtex<CR>', { desc = 'Insert citation' })
 
 -- OBSIDIAN CONFIGURATION
 require('obsidian').setup({

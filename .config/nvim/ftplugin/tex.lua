@@ -86,3 +86,9 @@ vim.cmd([[
 
 -- CONFIRMATION MESSAGE
 vim.cmd('echom "LaTeX filetype settings loaded"') -- Verify settings are applied
+
+-- Compile with bibliography
+vim.keymap.set('n', '<leader>lb', function()
+  local file = vim.fn.expand('%:t:r')
+  vim.cmd('!pdflatex ' .. file .. '.tex && biber ' .. file .. ' && pdflatex ' .. file .. '.tex')
+end, { buffer = true, desc = 'Compile with bibliography' })
