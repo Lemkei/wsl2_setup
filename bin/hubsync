@@ -9,6 +9,6 @@ rclone bisync "$HOME" gcrypt:home \
   --filters-file "$HOME/wsl2_setup/rclone/filters.txt" \
   --resilient --recover --max-lock 2m \
   --conflict-resolve newer --conflict-loser num \
-  --create-empty-src-dirs --links \
+  --create-empty-src-dirs --links --fast-list \
   --progress --stats-one-line \
   "$@"
