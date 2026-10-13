@@ -24,6 +24,8 @@ alias l='ls -CF'
 shopt -s cdspell
 # Prompt with username and current directory
 PS1='\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# Report cwd to wezterm via OSC 7 so tab titles show project folder
+PROMPT_COMMAND='printf "\e]7;file://%s%s\e\\" "${HOSTNAME}" "${PWD}"'
 # Load bash completions if they exist
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -113,3 +115,36 @@ compile-latex() {
 }
 
 export EDITOR=nvim
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export CLAUDE_CODE_MAX_OUTPUT_TOKENS=64000
+[ -f "$HOME/.secrets.sh" ] && . "$HOME/.secrets.sh"  # tokens, never synced
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/home/lemkei/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/home/lemkei/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<
+. "$HOME/.cargo/env"
+export PATH="$HOME/bin:$PATH"
+
+# Claude accounts: `claude work` = CERGE account, plain `claude` = personal
+claude() {
+  if [ "$1" = "work" ]; then
+    shift
+    CLAUDE_CONFIG_DIR="$HOME/.claude-work" command claude "$@"
+  else
+    command claude "$@"
+  fi
+}

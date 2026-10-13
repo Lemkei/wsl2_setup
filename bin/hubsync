@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Two-way sync of ~/hub, ~/classes, Claude sessions/skills/hooks and the home
+# guides with encrypted Google Drive (remote gcrypt:). Run before leaving a
+# machine and on arriving at the other. Never run it while a Claude session
+# on the other machine is still writing.
+# First run on a new machine: hubsync --resync --resync-mode path2
+set -euo pipefail
+rclone bisync "$HOME" gcrypt:home \
+  --filters-file "$HOME/wsl2_setup/rclone/filters.txt" \
+  --resilient --recover --max-lock 2m \
+  --conflict-resolve newer --conflict-loser num \
+  --create-empty-src-dirs --links \
+  --progress --stats-one-line \
+  "$@"

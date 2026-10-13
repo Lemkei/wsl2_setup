@@ -1,0 +1,22 @@
+# What hubsync carries between machines. Paths are relative to $HOME.
+# Changing this file requires one `hubsync --resync` on each machine.
+- **/.venv/**
+- **/__pycache__/**
+- **/.ruff_cache/**
+- **/.pytest_cache/**
+- **/node_modules/**
+- **/*:Zone.Identifier
+- **/.git/index.lock
++ /hub/**
++ /classes/**
++ /.claude/projects/**
++ /.claude/skills/**
++ /.claude/hooks/**
++ /.claude/settings.json
++ /.claude/statusline.sh
++ /CLAUDE.md
++ /DATA_PIPELINE_RULES.md
++ /academic_writing_style_guide.md
++ /teaching_guide.md
++ /todoist_reference.md
+- **

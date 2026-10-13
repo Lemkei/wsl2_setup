@@ -18,6 +18,7 @@
 % Bibliography setup (APA style)
 \usepackage[style=apa,backend=biber]{biblatex}
 \addbibresource{/home/lemkei/references.bib}
+\addbibresource{/home/lemkei/data.bib} 
 
 % Document formatting
 \onehalfspacing

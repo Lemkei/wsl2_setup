@@ -1,0 +1,58 @@
+#!/bin/bash
+# Usage: block [minutes]  (default: 90)
+#        block status      — check remaining time
+#        block cancel       — cancel running block
+
+STATEFILE="/tmp/block_timer"
+
+if [[ "$1" == "status" ]]; then
+    if [[ -f "$STATEFILE" ]]; then
+        END=$(cat "$STATEFILE")
+        NOW=$(date +%s)
+        LEFT=$(( (END - NOW) / 60 ))
+        if (( LEFT > 0 )); then
+            echo "${LEFT} min remaining."
+        else
+            echo "Block finished (popup may be waiting)."
+            rm -f "$STATEFILE"
+        fi
+    else
+        echo "No active block."
+    fi
+    exit 0
+fi
+
+if [[ "$1" == "cancel" ]]; then
+    if [[ -f "${STATEFILE}.pid" ]]; then
+        kill "$(cat "${STATEFILE}.pid")" 2>/dev/null
+        rm -f "$STATEFILE" "${STATEFILE}.pid"
+        echo "Block cancelled."
+    else
+        echo "No active block."
+    fi
+    exit 0
+fi
+
+MINS=${1:-90}
+SECS=$((MINS * 60))
+END=$(( $(date +%s) + SECS ))
+echo "$END" > "$STATEFILE"
+
+echo "Block started: ${MINS} min. Go work."
+
+(
+    sleep $SECS
+    rm -f "$STATEFILE" "${STATEFILE}.pid"
+    powershell.exe -Command "
+        Add-Type -AssemblyName System.Windows.Forms
+        [System.Windows.Forms.MessageBox]::Show(
+            '${MINS}-minute block done. Take a break.',
+            'Block Timer',
+            'OK',
+            'Information'
+        )
+    " > /dev/null 2>&1
+) &
+
+echo "$!" > "${STATEFILE}.pid"
+disown

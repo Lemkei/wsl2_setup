@@ -116,7 +116,7 @@ require('obsidian').setup({
   },
 })
 
-vim.cmd('colorscheme solarized8')
+vim.cmd('colorscheme frieren')
 
 -- =============================================================================
 -- TEMPLATE SYSTEM
