@@ -1,8 +1,9 @@
 # Set up this PC to mirror my laptop's WSL2 environment
 
 You are Claude Code running on Windows on my desktop PC. Rebuild my laptop's
-WSL2 setup here. Everything config-related is in the public repo
-https://github.com/lemkei/wsl2_setup (clone it, read the files, don't guess).
+WSL2 setup here. Everything config-related is in the folder `wsl2_setup`
+that I unzipped next to this file (from `wsl2_setup.zip`). Read the files,
+don't guess. If you can't find it, ask me for the path.
 My data then arrives through `hubsync` (rclone bisync to an encrypted Google
 Drive remote), which my laptop has already uploaded.
 
@@ -41,7 +42,10 @@ Rules:
    (the apt version is too old for bisync). Check `rclone version` ≥ 1.66.
 
 ## Phase 3 — user environment (as lemkei)
-8. `git clone https://github.com/lemkei/wsl2_setup ~/wsl2_setup`.
+8. Copy the unzipped `wsl2_setup` folder into WSL as `~/wsl2_setup`
+   (via `\\wsl$\Ubuntu-24.04\home\lemkei\` or `cp -r /mnt/c/...` inside WSL),
+   then `chmod +x ~/wsl2_setup/bin/*` and `git -C ~/wsl2_setup status` (it
+   includes `.git`).
 9. Back up the existing `~/.bashrc` to `~/.bashrc.orig`, then copy the repo's
    `.bashrc` into `~`. Copy `.config/nvim` to `~/.config/nvim`. `mkdir -p ~/bin`
    and symlink `~/wsl2_setup/bin/hubsync` and `~/wsl2_setup/bin/block` into it.
